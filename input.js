@@ -12,27 +12,27 @@ const setupInput = (conn) => {
 
 let id = -1;
 
-const handleUserInput = (key, speedMultiplier) => {
+const handleUserInput = (key) => {
   const moveSnake = (direction) => {
     clearInterval(id);
-
+  
     id = setInterval(() => {
       connection.write(`Move: ${direction}`);
-    }, 100 * speedMultiplier);
-
+    }, 100);
+  
     id;
   };
 
   if (key === '\u0003') {
     process.exit();
   } else if (key === 'w') {
-    moveSnake('up', 1);
+    moveSnake('up');
   } else if (key === 's') {
-    moveSnake('down', 1);
+    moveSnake('down');
   } else if (key === 'a') {
-    moveSnake('left', 2);
+    moveSnake('left');
   } else if (key === 'd') {
-    moveSnake('right', 2);
+    moveSnake('right');
   } else if (key === 't') {
     connection.write('winner!');
   } else if (key === 'y') {
@@ -43,5 +43,5 @@ const handleUserInput = (key, speedMultiplier) => {
 };
 
 module.exports = {
-  setupInput: setupInput
+  setupInput: setupInput,
 };
