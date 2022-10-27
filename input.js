@@ -13,32 +13,37 @@ const setupInput = (conn) => {
 let id = -1;
 
 const handleUserInput = (key) => {
-  const moveSnake = (direction) => {
+  const moveSnake = (direction, speedMultiplier) => {
     clearInterval(id);
   
     id = setInterval(() => {
       connection.write(`Move: ${direction}`);
-    }, 100);
+    }, 100 / speedMultiplier);
   
     id;
+  };
+
+  const shoutMsg = (phrase) => {
+    connection.write(`Say: ${phrase}`);
   };
 
   if (key === '\u0003') {
     process.exit();
   } else if (key === 'w') {
-    moveSnake('up');
+    moveSnake('up', 1);
   } else if (key === 's') {
-    moveSnake('down');
+    moveSnake('down', 1);
   } else if (key === 'a') {
-    moveSnake('left');
+    moveSnake('left', 2);
+    //speed multiplier because the snake moves slower going horizontally due to pixel size
   } else if (key === 'd') {
-    moveSnake('right');
+    moveSnake('right', 2);
   } else if (key === 't') {
-    connection.write('winner!');
+    shoutMsg('winner!');
   } else if (key === 'y') {
-    connection.write('got ya!');
+    shoutMsg('got ya!');
   } else if (key === 'u') {
-    connection.write('speeeed');
+    shoutMsg('speed!');
   }
 };
 
